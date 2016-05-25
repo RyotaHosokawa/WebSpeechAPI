@@ -8,6 +8,8 @@
 	window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 	var recognition = new webkitSpeechRecognition();
 	recognition.lang = 'ja';
+	//true = 変換の途中経過を表示する
+	recognition.interimResults = true;
 
 	//録音終了トリガー
 	recognition.addEventListener('result', function(event){
