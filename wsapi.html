@@ -13,6 +13,22 @@
 	//ture = 連続で音声認識
 	recognition.continuous = true;
 
+	recognition.onsoundstart = function(){
+		$("#status").val("認識中");
+	};
+
+	recognition.onnomatch = function(){
+		$("#status").val("もう一度試してください");
+	};
+
+	recognition.onerror = function(){
+		$("#status").val("エラー");
+	};
+
+	recognition.onsoundend = function(){
+		$("#status").val("停止中");
+	};
+
 	//録音終了トリガー
 	recognition.addEventListener('result', function(event){
 		var text = event.results.item(0).item(0).transcript;
@@ -29,5 +45,7 @@
 <body>
 	<textarea id="result_text" cols="100" rows="10"></textarea>
 	<input type="button" onclick="record()" value="録音開始" />
+	<textarea id="status" cols="100" rows="1"></textarea>
+
 </body>
 </html>
