@@ -10,6 +10,8 @@
 	recognition.lang = 'ja';
 	//true = 変換の途中経過を表示する
 	recognition.interimResults = true;
+	//ture = 連続で音声認識
+	recognition.continuous = true;
 
 	//録音終了トリガー
 	recognition.addEventListener('result', function(event){
