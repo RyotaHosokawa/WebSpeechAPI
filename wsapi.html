@@ -5,35 +5,61 @@
 	<meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
-	window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-	var recognition = new webkitSpeechRecognition();
-	recognition.lang = 'ja';
-	//true = 変換の途中経過を表示する
-	recognition.interimResults = true;
-	//ture = 連続で音声認識
-	recognition.continuous = true;
 
-	recognition.onsoundstart = function(){
-		$("#status").val("認識中");
-	};
+	var flag_speech = 0;
 
-	recognition.onnomatch = function(){
-		$("#status").val("もう一度試してください");
-	};
+	function vr_function(){
+		window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+		var recognition = new webkitSpeechRecognition();
+		recognition.lang = 'ja';
+		//true = 変換の途中経過を表示する
+		recognition.interimResults = true;
+		//ture = 連続で音声認識
+		recognition.continuous = true;
 
-	recognition.onerror = function(){
-		$("#status").val("エラー");
-	};
+		recognition.onaudiostart = function(){
+			$("#status").val("認識中");
+		};
 
-	recognition.onsoundend = function(){
-		$("#status").val("停止中");
-	};
+		recognition.onnomatch = function(){
+			$("#status").val("もう一度試してください");
+		};
 
-	//録音終了トリガー
-	recognition.addEventListener('result', function(event){
-		var text = event.results.item(0).item(0).transcript;
-		$("#result_text").val(text);
-	}, false);
+		recognition.onerror = function(){
+			$("#status").val("エラー");
+			if(flag_speech == 0){
+				vr_function();
+			}
+		};
+
+		recognition.onsoundend = function(){
+			$("#status").val("停止中");
+			vr_function();
+		};
+
+		//録音終了トリガー
+		recognition.onresult = function(event){
+			var results = event.results;
+			for(var i=event.resultIndex; i<results.length; i++){
+				if(results[i].isFinal){
+					$("#result_text").val(results[i][0].transcript);
+					vr_function();
+				}else{
+					$("#result_text").val("[認識中]" + results[i][0].transcript);
+					flag_speech = 1;
+				}
+			}
+		}
+
+		// recognition.addEventListener('result', function(event){
+		// 	var text = event.results.item(0).item(0).transcript;
+		// 	$("#result_text").val(text);
+		// }, false);
+
+		flag_speech = 0;
+		$("#status").val("start");
+		recognition.start();
+	}
 
 	//録音開始
 	function record(){
@@ -44,7 +70,7 @@
 
 <body>
 	<textarea id="result_text" cols="100" rows="10"></textarea>
-	<input type="button" onclick="record()" value="録音開始" />
+	<input type="button" onclick="vr_function()" value="録音開始" />
 	<textarea id="status" cols="100" rows="1"></textarea>
 
 </body>
