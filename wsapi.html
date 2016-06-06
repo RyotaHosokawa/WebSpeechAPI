@@ -73,11 +73,12 @@
 
 		xmlHttpReq = createHttpRequest();
 		if (xmlHttpReq) {
-			xmlHttpReq.open("GET", txt, true);
-   if (xmlHttpReq.readyState==4) {
-   }
-}
-xmlHttpReq.send(null);
+
+			xmlHttpReq.open("GET", "./save.rb?txt="+txt, true);
+   			if (xmlHttpReq.readyState==4) {
+   		}
+	}
+	xmlHttpReq.send(null);
 }
 
 function createHttpRequest() {
