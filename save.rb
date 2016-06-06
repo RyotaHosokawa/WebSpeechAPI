@@ -11,7 +11,7 @@ begin
 
   file = "./txtfiles/log.txt"
 
-  txt = URI.unescape(data["text"])
+  txt = URI.unescape(data["txt"])
 
   fh = open(file, "a")
   fh.print txt
