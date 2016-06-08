@@ -72,10 +72,11 @@
 	function saveFile(txt) {
 
 		xmlHttpReq = createHttpRequest();
-		if (xmlHttpReq) {
-
-			xmlHttpReq.open("GET", "./save.rb?txt="+txt, true);
+		if (xmlHttpReq){
+			
+			xmlHttpReq.open("GET", "./save.rb?txt="+ encodeURIComponent(txt), true);
    			if (xmlHttpReq.readyState==4) {
+                        alert(xmlHttpReq.responseText);
    		}
 	}
 	xmlHttpReq.send(null);
