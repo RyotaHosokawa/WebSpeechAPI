@@ -76,9 +76,10 @@
 			
 			xmlHttpReq.open("GET", "./save.rb?txt="+ encodeURIComponent(txt), true);
    			if (xmlHttpReq.readyState==4) {
-                        alert(xmlHttpReq.responseText);
+                console.log(xmlHttpReq.responseText);
    		}
 	}
+	console.log("save!");
 	xmlHttpReq.send(null);
 }
 

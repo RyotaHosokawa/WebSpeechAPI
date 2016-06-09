@@ -9,11 +9,12 @@ begin
  
   print "Content-Type: text/plain\n\n"
 
-  file = "/var/www/html/b1013224/wsapi/txtfiles/log.txt"
+  file = "./txtfiles/log.txt"
 
   txt = URI.unescape(data["txt"])
 
   fh = open(file, "a")
   fh.print txt + "\n"
   fh.close
+  print txt
 end
