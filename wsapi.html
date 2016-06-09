@@ -18,7 +18,7 @@
 		recognition.continuous = true;
 
 		recognition.onaudiostart = function(){
-			$("#status").val("認識中");
+			$("#status").val("話してください");
 		};
 
 		recognition.onnomatch = function(){
@@ -34,7 +34,6 @@
 
 		recognition.onsoundend = function(){
 			$("#status").val("停止中");
-			vr_function();
 		};
 
 		//録音終了トリガー
@@ -58,7 +57,7 @@
 		// }, false);
 
 		flag_speech = 0;
-		$("#status").val("start");
+		$("#status").val("少々お待ちください");
 		recognition.start();
 	}
 
