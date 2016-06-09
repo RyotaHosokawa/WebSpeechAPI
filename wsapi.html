@@ -83,13 +83,11 @@
 }
 
 function createHttpRequest() {
-	var x = null;
-
   // for IE7, Firefox, Safari
   if (window.XMLHttpRequest) {
   	return new XMLHttpRequest();
   }
-  return x;
+  return null;
 }
 </script>
 </head>
