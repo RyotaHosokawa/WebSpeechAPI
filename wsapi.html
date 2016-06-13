@@ -74,11 +74,12 @@
 		if (xmlHttpReq){
 			
 			xmlHttpReq.open("GET", "./save.rb?txt="+ encodeURIComponent(txt), true);
-   			if (xmlHttpReq.readyState==4) {
-                console.log(xmlHttpReq.responseText);
+   			xmlHttpReq.onreadystatechange = function() {
+	   			if (xmlHttpReq.readyState==4) {
+	   				$("#log").before(xmlHttpReq.responseText);
+   			}
    		}
 	}
-	console.log("save!");
 	xmlHttpReq.send(null);
 }
 
@@ -89,12 +90,26 @@ function createHttpRequest() {
   }
   return null;
 }
+
+function load_log(){
+	xmlHttpReq = createHttpRequest();
+	if(xmlHttpReq){
+		xmlHttpReq.open("GET", "./load.rb", true);
+		xmlHttpReq.onreadystatechange = function() {
+			if(xmlHttpReq.readyState == 4){
+				$("#log").append(xmlHttpReq.responseText);
+			}
+		}
+	}
+	xmlHttpReq.send(null);
+}
 </script>
 </head>
 
-<body>
+<body onload="load_log()">
 	<textarea id="result_text" cols="100" rows="10"></textarea></br>
 	<input id="status" type="text"></input></br>
-	<input type="button" onclick="vr_function()" value="録音開始" />
+	<input type="button" onclick="vr_function()" value="録音開始" /></br>
+	<div id="log"></div>
 </body>
 </html>

@@ -11,9 +11,15 @@ begin
 
   file = "./txtfiles/log.txt"
 
+  log = Array.new()
   f = open(file, "r")
   while line = f.gets
-    print line
+  	log.unshift(line)
   end
   f.close
+
+  for log_line in log
+    print log_line + "<br>"
+  end
+
 end
